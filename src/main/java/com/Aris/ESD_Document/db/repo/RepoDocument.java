@@ -22,6 +22,6 @@ public interface RepoDocument extends CrudRepository<Document,Long>{
     List<Document> findByIdApplicantAndIsVisible(long idApplicant,int isVisible);
     List<Document> findByIsMovedAndIdCreatedEmpAndIsVisibleAndIsDeleteOrderByIdDocumentDesc(int isMoved,long idCreatedEmp,int isVisible,int isDelete);
 
-
+//
 
 }
