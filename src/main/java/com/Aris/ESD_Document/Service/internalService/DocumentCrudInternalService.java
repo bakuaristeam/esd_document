@@ -35,6 +35,7 @@ public class DocumentCrudInternalService {
             documentResponse.setStatusMessage("Saved");
             logger.info("Document response : {}", saveDocumentRequest.toString());
 
+//
             document.setIdDocumentType(saveDocumentRequest.getIdDocumentType());
             document.setDocumentCode("");
             document.setIdApplicant(saveDocumentRequest.getIdApplicant());
