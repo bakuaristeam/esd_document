@@ -58,6 +58,7 @@ public class DocumentSearchServices {
     public ResponseSearchDocument getDocByIdDoc(@PathVariable("idDoc") long idDoc){
         logger.info("esd_Document_idDocument->search->request : {}",idDoc);
         return documentSearchInternalService.getDocByIdDoc(idDoc);
+//
     }
 
     @GetMapping("/getDocByIdOrg/{idOrg}")
