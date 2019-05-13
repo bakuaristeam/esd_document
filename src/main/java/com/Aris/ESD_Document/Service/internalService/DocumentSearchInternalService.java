@@ -157,7 +157,7 @@ public class DocumentSearchInternalService {
     }
 
     public ResponseSearchDocument getDocByDocCode (String docCode){
-        Document documentByDocumentCode = repoDocument.findByDocumentCodeAndIsVisible(docCode,1);
+        Document documentByDocumentCode = repoDocument.findByDocumentCodeAndIsVisibleAndIsDelete(docCode,1,0);
         ResponseSearchDocument response = new ResponseSearchDocument();
         try {
             if (documentByDocumentCode != null) {

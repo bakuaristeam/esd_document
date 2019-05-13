@@ -1,6 +1,7 @@
 package com.Aris.ESD_Document.Service.internal.crud;
 
-import java.util.Date;
+
+import org.springframework.lang.Nullable;
 
 public class SaveDocumentRequest {
 
@@ -9,8 +10,11 @@ public class SaveDocumentRequest {
     private long idDocumentType;
     private long documentEnteredDate;
     private long expiredDate;
+    @Nullable
     private long idOrganisation;
+    @Nullable
     private long idApplicant;
+    @Nullable
     private long idDepartment;
     private String note;
     private int isVisible;
@@ -18,9 +22,12 @@ public class SaveDocumentRequest {
     private long idCreatedEmp;
     private int isControl;
     private int isMoved;
+    private int vereqSayi;
+    private int qosma;
+    private int qosmaSayi;
 
 
-    public SaveDocumentRequest(String documentCode, long idDocumentType, long documentEnteredDate, long expiredDate, long idOrganisation, long idApplicant, long idDepartment, String note, int isVisible, int isDelete, long idCreatedEmp, int isControl, int isMoved) {
+    public SaveDocumentRequest(String documentCode, long idDocumentType, long documentEnteredDate, long expiredDate, long idOrganisation, long idApplicant, long idDepartment, String note, int isVisible, int isDelete, long idCreatedEmp, int isControl, int isMoved, int vereqSayi, int qosma, int qosmaSayi) {
         this.documentCode = documentCode;
         this.idDocumentType = idDocumentType;
         this.documentEnteredDate = documentEnteredDate;
@@ -34,6 +41,9 @@ public class SaveDocumentRequest {
         this.idCreatedEmp = idCreatedEmp;
         this.isControl = isControl;
         this.isMoved = isMoved;
+        this.vereqSayi = vereqSayi;
+        this.qosma = qosma;
+        this.qosmaSayi = qosmaSayi;
     }
 
     public SaveDocumentRequest() {
@@ -55,6 +65,9 @@ public class SaveDocumentRequest {
                 ", idCreatedEmp=" + idCreatedEmp +
                 ", isControl=" + isControl +
                 ", isMoved=" + isMoved +
+                ", vereqSayi=" + vereqSayi +
+                ", qosma=" + qosma +
+                ", qosmaSayi=" + qosmaSayi +
                 '}';
     }
 
@@ -160,5 +173,29 @@ public class SaveDocumentRequest {
 
     public void setIsMoved(int isMoved) {
         this.isMoved = isMoved;
+    }
+
+    public int getVereqSayi() {
+        return vereqSayi;
+    }
+
+    public void setVereqSayi(int vereqSayi) {
+        this.vereqSayi = vereqSayi;
+    }
+
+    public int getQosma() {
+        return qosma;
+    }
+
+    public void setQosma(int qosma) {
+        this.qosma = qosma;
+    }
+
+    public int getQosmaSayi() {
+        return qosmaSayi;
+    }
+
+    public void setQosmaSayi(int qosmaSayi) {
+        this.qosmaSayi = qosmaSayi;
     }
 }

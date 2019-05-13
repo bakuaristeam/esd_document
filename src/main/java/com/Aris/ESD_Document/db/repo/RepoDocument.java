@@ -3,14 +3,19 @@ package com.Aris.ESD_Document.db.repo;
 import com.Aris.ESD_Document.db.entities.Document;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.Date;
 import java.util.List;
 
 public interface RepoDocument extends CrudRepository<Document,Long>{
 
+    Document findByDocumentCodeAndIsVisibleAndIsDelete(String docCode, int isVisible,int isDelete);
+
+
+
+
+
 
     Document findByIdDocumentAndIsVisible(long idDoc,int isVisible);
-    Document findByDocumentCodeAndIsVisible(String docCode,int isVisible);
+
     Document findByDocumentEnteredDateAndIsVisible(long docEnteredDate,int isVisible);
     Document findByExpiredDateAndIsVisible(long expiredDate,int isVisible);
 

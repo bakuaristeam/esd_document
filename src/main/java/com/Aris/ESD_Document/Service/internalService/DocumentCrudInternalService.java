@@ -46,6 +46,9 @@ public class DocumentCrudInternalService {
             document.setIsVisible(1);
             document.setIsDelete(0);
             document.setIsControl(saveDocumentRequest.getIsControl());
+            document.setVereqSayi(saveDocumentRequest.getVereqSayi());
+            document.setQosma(saveDocumentRequest.getQosma());
+            document.setQosmaSayi(saveDocumentRequest.getQosmaSayi());
 
             document.setExpiredDate(saveDocumentRequest.getExpiredDate());
             document.setDocumentEnteredDate(saveDocumentRequest.getDocumentEnteredDate());
@@ -141,6 +144,9 @@ public class DocumentCrudInternalService {
                 doc.setExpiredDate(updateDocumentRequest.getExpiredDate());
                 doc.setIsMoved(updateDocumentRequest.getIsMoved());
                 doc.setDocumentEnteredDate(updateDocumentRequest.getDocumentEnteredDate());
+                doc.setVereqSayi(updateDocumentRequest.getVereqSayi());
+                doc.setQosma(updateDocumentRequest.getQosma());
+                doc.setQosmaSayi(updateDocumentRequest.getQosmaSayi());
                 doc=repoDocument.save(doc);
                 documentResponse.setDocument(doc);
             }else{
@@ -162,17 +168,16 @@ public class DocumentCrudInternalService {
 
 
 
-    public DocumentResponse deleteIdDocument(long idDocument) {
+    public DocumentResponse deleteIdDocument(DeleteDocumentRequest deleteDocumentRequest) {
         DocumentResponse documentResponse = new DocumentResponse();
         try {
-            Document doc = repoDocument.findByIdDocumentAndIsVisible(idDocument,1);
-            DeleteDocumentRequest deleteDocumentRequest=new DeleteDocumentRequest();
+            Document doc = repoDocument.findByIdDocumentAndIsVisible(deleteDocumentRequest.getIdDocument(),1);
             if (doc == null) {
                 documentResponse.setServerMessage("OK");
                 documentResponse.setServerCode(220);
                 documentResponse.setStatusMessage("Document not found!!!");
             } else {
-                if (doc.getIdCreatedEmp() == deleteDocumentRequest.getEmpId()) {
+                if (deleteDocumentRequest.getIdDocument() == deleteDocumentRequest.getEmpId()) {
                     //icaze verirsenki silmeye
                     documentResponse.setServerCode(200);
                     documentResponse.setServerMessage("OK");

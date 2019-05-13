@@ -1,5 +1,7 @@
 package com.Aris.ESD_Document.Service.internal.crud;
 
+import org.springframework.lang.Nullable;
+
 import java.util.Date;
 
 public class UpdateDocumentRequest {
@@ -9,8 +11,11 @@ public class UpdateDocumentRequest {
     private long idDocumentType;
     private long documentEnteredDate;
     private long expiredDate;
+    @Nullable
     private long idOrganisation;
+    @Nullable
     private long idApplicant;
+    @Nullable
     private long idDepartment;
     private String note;
     private int isVisible;
@@ -18,8 +23,11 @@ public class UpdateDocumentRequest {
     private long idCreatedEmp;
     private int isControl;
     private int isMoved;
+    private int vereqSayi;
+    private int qosma;
+    private int qosmaSayi;
 
-    public UpdateDocumentRequest(long idDocument, String documentCode, long idDocumentType, long documentEnteredDate, long expiredDate, long idOrganisation, long idApplicant, long idDepartment, String note, int isVisible, int isDelete, long idCreatedEmp, int isControl, int isMoved) {
+    public UpdateDocumentRequest(long idDocument, String documentCode, long idDocumentType, long documentEnteredDate, long expiredDate, long idOrganisation, long idApplicant, long idDepartment, String note, int isVisible, int isDelete, long idCreatedEmp, int isControl, int isMoved, int vereqSayi, int qosma, int qosmaSayi) {
         this.idDocument = idDocument;
         this.documentCode = documentCode;
         this.idDocumentType = idDocumentType;
@@ -34,6 +42,9 @@ public class UpdateDocumentRequest {
         this.idCreatedEmp = idCreatedEmp;
         this.isControl = isControl;
         this.isMoved = isMoved;
+        this.vereqSayi = vereqSayi;
+        this.qosma = qosma;
+        this.qosmaSayi = qosmaSayi;
     }
 
     public UpdateDocumentRequest() {
@@ -56,6 +67,9 @@ public class UpdateDocumentRequest {
                 ", idCreatedEmp=" + idCreatedEmp +
                 ", isControl=" + isControl +
                 ", isMoved=" + isMoved +
+                ", vereqSayi=" + vereqSayi +
+                ", qosma=" + qosma +
+                ", qosmaSayi=" + qosmaSayi +
                 '}';
     }
 
@@ -169,5 +183,29 @@ public class UpdateDocumentRequest {
 
     public void setIsMoved(int isMoved) {
         this.isMoved = isMoved;
+    }
+
+    public int getVereqSayi() {
+        return vereqSayi;
+    }
+
+    public void setVereqSayi(int vereqSayi) {
+        this.vereqSayi = vereqSayi;
+    }
+
+    public int getQosma() {
+        return qosma;
+    }
+
+    public void setQosma(int qosma) {
+        this.qosma = qosma;
+    }
+
+    public int getQosmaSayi() {
+        return qosmaSayi;
+    }
+
+    public void setQosmaSayi(int qosmaSayi) {
+        this.qosmaSayi = qosmaSayi;
     }
 }

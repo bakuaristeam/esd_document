@@ -4,10 +4,8 @@ import com.Aris.ESD_Document.Service.internal.crud.DeleteDocumentRequest;
 import com.Aris.ESD_Document.Service.internal.DocumentResponse;
 import com.Aris.ESD_Document.Service.internal.crud.SaveDocumentRequest;
 import com.Aris.ESD_Document.Service.internal.crud.UpdateDocumentRequest;
-import com.Aris.ESD_Document.Service.internal.search.ResponseSearchDocument;
 import com.Aris.ESD_Document.Service.internalService.DocumentCrudInternalService;
 import com.Aris.ESD_Document.Service.internalService.DocumentSearchInternalService;
-import com.Aris.ESD_Document.db.repo.RepoDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,10 +53,10 @@ public class DocumentCrudService {
 
 
 
-    @GetMapping("/delete1/{idDocument}")
-    public DocumentResponse deleteDocument1(@PathVariable("idDocument") long idDocument){
+    @PostMapping("/delete")
+    public DocumentResponse deleteDocument(@RequestBody DeleteDocumentRequest deleteDocumentRequest){
 
-        return documentCrudInternalService.deleteIdDocument(idDocument);
+        return documentCrudInternalService.deleteIdDocument(deleteDocumentRequest);
     }
 
 
