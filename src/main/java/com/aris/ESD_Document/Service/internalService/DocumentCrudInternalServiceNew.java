@@ -113,9 +113,12 @@ public class DocumentCrudInternalServiceNew {
                     while (s.length() < 5) {
                         s = "0" + s;
                     }
-                    ResponseSearchDocType responseDocTypeLocal = proxyDocType.getDocMovByIdDocType(responseDocType.getDocumentMovByidDocumentType().getParentId());
-                    String docCode1 = responseApplicant.getApplicant().getSurName().substring(0, 1) + "-" + s + "-" + responseDocTypeLocal.getDocumentMovByidDocumentType().getDocNumber() + "-" + responseDocType.getDocumentMovByidDocumentType().getDocNumber();
+//                    ResponseSearchDocType responseDocTypeLocal = proxyDocType.getDocMovByIdDocType(responseDocType.getDocumentMovByidDocumentType().getParentId());
+                    String docCode1 = responseApplicant.getApplicant().getSurName().substring(0, 1) + "-" + s + "-" + responseDocType.getDocumentMovByidDocumentType().getDocNumber();
                     document.setDocumentCode(docCode1);
+                    if(document.getDocumentCode().substring(0,1).equalsIgnoreCase("-")){
+                        document.setDocumentCode(document.getDocumentCode().substring(1));
+                    }
                     logger.info("document.SetDocCode :{}", document.toString());
                 }
 
@@ -128,29 +131,14 @@ public class DocumentCrudInternalServiceNew {
                     while (s.length() < 5) {
                         s = "0" + s;
                     }
-                    ResponseSearchDocType responseDocTypeLocal = proxyDocType.getDocMovByIdDocType(responseDocType.getDocumentMovByidDocumentType().getParentId());
-                    String docCode1 = "Kol-" + s + "-" + responseDocTypeLocal.getDocumentMovByidDocumentType().getDocNumber() + responseDocType.getDocumentMovByidDocumentType().getDocNumber();
+//                    ResponseSearchDocType responseDocTypeLocal = proxyDocType.getDocMovByIdDocType(responseDocType.getDocumentMovByidDocumentType().getParentId());
+                    String docCode1 = "Kol-" + s + "-" + responseDocType.getDocumentMovByidDocumentType().getDocNumber();
                     document.setDocumentCode(docCode1);
+                    if(document.getDocumentCode().substring(0,1).equalsIgnoreCase("-")){
+                        document.setDocumentCode(document.getDocumentCode().substring(1));
+                    }
                 }
             }
-
-//            else if (responseDocType.getDocumentMovByidDocumentType().getType() == 1) {
-//                logger.info("responseDocType.getDocumentMovByidDocumentType().getType() :{}", responseDocType.getDocumentMovByidDocumentType().getType());
-//                String s = "";
-//                String docIDForCode = document.getIdDocument()+"";
-//                for (int i = 0; i < 1 - s.length(); i++) {
-//                    s += "0";
-//
-//                }
-//                s+=docIDForCode;
-//                while (s.length() < 5) {
-//                    s = "0" + s;
-//                }
-//                String docCode1 = responseDocType.getDocumentMovByidDocumentType().getDocumentTitle().substring(0,1) + "-" + s;
-//                document.setDocumentCode(docCode1);
-//                logger.info("responseDocType.getDocumentMovByidDocumentType().getType() :{} ", document.toString());
-//            }
-
             //Daxil olan  senedler
             else if (responseDocType.getDocumentMovByidDocumentType().getParentId() > 0) {
                 logger.info("responseApplicant :{}", responseApplicant.toString());
@@ -160,9 +148,27 @@ public class DocumentCrudInternalServiceNew {
                 while (s.length() < 5) {
                     s = "0" + s;
                 }
-                ResponseSearchDocType responseDocTypeLocal = proxyDocType.getDocMovByIdDocType(responseDocType.getDocumentMovByidDocumentType().getParentId());
-                String docCode1 = responseDocTypeLocal.getDocumentMovByidDocumentType().getDocNumber() + "-" + s;
+//                ResponseSearchDocType responseDocTypeLocal = proxyDocType.getDocMovByIdDocType(responseDocType.getDocumentMovByidDocumentType().getParentId());
+                String docCode1 = responseDocType.getDocumentMovByidDocumentType().getDocNumber() + "-" + s;
                 document.setDocumentCode(docCode1);
+                if(document.getDocumentCode().substring(0,1).equalsIgnoreCase("-")){
+                    document.setDocumentCode(document.getDocumentCode().substring(1));
+                }
+                logger.info("Document :{} ", document.toString());
+            } else if (responseDocType.getDocumentMovByidDocumentType().getParentId() == 0) {
+                logger.info("responseApplicant :{}", responseApplicant.toString());
+                String s = "";
+                s += getDocCount(document.getIdDocumentType());
+
+                while (s.length() < 5) {
+                    s = "0" + s;
+                }
+//                ResponseSearchDocType responseDocTypeLocal = proxyDocType.getDocMovByIdDocType(responseDocType.getDocumentMovByidDocumentType().getParentId());
+                String docCode1 = responseDocType.getDocumentMovByidDocumentType().getDocNumber() + "-" + s;
+                document.setDocumentCode(docCode1);
+                if(document.getDocumentCode().substring(0,1).equalsIgnoreCase("-")){
+                    document.setDocumentCode(document.getDocumentCode().substring(1));
+                }
                 logger.info("Document :{} ", document.toString());
             } else {
                 logger.info("responseApplicant :{}", responseApplicant.toString());
@@ -174,11 +180,14 @@ public class DocumentCrudInternalServiceNew {
                 }
                 String docCode1;
                 if (responseDocType.getDocumentMovByidDocumentType().getDocNumber().length() > 0 && responseDocType.getDocumentMovByidDocumentType().getDocNumber() != null) {
-                    docCode1 = responseDocType.getDocumentMovByidDocumentType().getDocNumber().replace("%letterA%","A").replace("%letterE%","E") + "-" + s;
+                    docCode1 = responseDocType.getDocumentMovByidDocumentType().getDocNumber().replace("%count%", s);
                 } else {
                     docCode1 = s;
                 }
                 document.setDocumentCode(docCode1);
+                if(document.getDocumentCode().substring(0,1).equalsIgnoreCase("-")){
+                    document.setDocumentCode(document.getDocumentCode().substring(1));
+                }
                 logger.info("Document :{} ", document.toString());
             }
 
