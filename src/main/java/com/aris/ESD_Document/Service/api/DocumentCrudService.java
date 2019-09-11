@@ -4,7 +4,7 @@ import com.aris.ESD_Document.Service.internal.crud.DeleteDocumentRequest;
 import com.aris.ESD_Document.Service.internal.DocumentResponse;
 import com.aris.ESD_Document.Service.internal.crud.SaveDocumentRequest;
 import com.aris.ESD_Document.Service.internal.crud.UpdateDocumentRequest;
-import com.aris.ESD_Document.Service.internalService.DocumentCrudInternalService;
+import com.aris.ESD_Document.Service.internalService.DocumentCrudInternalServiceNew;
 import com.aris.ESD_Document.Service.internalService.DocumentSearchInternalService;
 import com.aris.ESD_Document.Service.internalService.ResponseDocCount;
 import org.slf4j.Logger;
@@ -19,7 +19,7 @@ public class DocumentCrudService {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    DocumentCrudInternalService documentCrudInternalService;
+    DocumentCrudInternalServiceNew documentCrudInternalService;
 
     @Autowired
     DocumentSearchInternalService documentSearchInternalService;

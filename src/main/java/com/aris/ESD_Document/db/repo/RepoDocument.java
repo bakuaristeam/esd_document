@@ -33,6 +33,8 @@ public interface RepoDocument extends JpaRepository<Document,Long> {
 
     List<Document> findByIsControlAndIsVisibleAndIdCreatedEmp(int isControl,int isVisible,long idCreatedEmp);
 
+    Document findByIsVisible(int isVisible);
+
     long countByIdDocumentType(long idDocType);
 
 }

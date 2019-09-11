@@ -329,6 +329,29 @@ public class DocumentSearchInternalService {
         return response;
     }
 
+    public ResponseSearchDocument getAllDoc(){
+        Document document= repoDocument.findByIsVisible(1);
+        ResponseSearchDocument response = new ResponseSearchDocument();
+
+        try {
+            if (document != null ) {
+                response.setDocument(document);
+                response.setServerCode(200);
+                response.setServerMessage(" Document found");
+                logger.info("SearchDocument response : {}", response.toString());
+            } else {
+                response.setDocument(null);
+                response.setServerCode(220);
+                response.setServerMessage("document not found");
+            }
+        }catch (Exception e){
+            response.setServerCode(100);
+            response.setServerMessage("error"+e);
+            logger.info("error",e);
+        }
+        return response;
+    }
+
 
 
 }

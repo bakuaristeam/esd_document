@@ -129,5 +129,9 @@ public class DocumentSearchServices {
         return documentSearchInternalService.getIsControlDoc(idCreatedEmp);
     }
 
+    @GetMapping("/getAllDoc")
+    public ResponseSearchDocument getAllDoc(){
+        return documentSearchInternalService.getAllDoc();
+    }
 
 }

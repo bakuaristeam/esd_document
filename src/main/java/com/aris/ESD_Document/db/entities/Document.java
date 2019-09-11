@@ -40,11 +40,11 @@ public class Document implements Serializable {
     @Nullable
     private String organisation;
 
-//    @Nullable
-//    private long idOrganisation;
+    @Nullable
+    private long idOrganisation;
 
 
-    public Document(String documentCode, long idDocumentType, long documentEnteredDate, long expiredDate, long idApplicant, long idDepartment, String note, int isVisible, int isDelete, long idCreatedEmp, int isControl, int isMoved, int vereqSayi, int qosma, int qosmaSayi, String combineDocument, int orgNo, long orgDate, @Nullable String organisation) {
+    public Document(String documentCode, long idDocumentType, long documentEnteredDate, long expiredDate, long idApplicant, long idDepartment, String note, int isVisible, int isDelete, long idCreatedEmp, int isControl, int isMoved, int vereqSayi, int qosma, int qosmaSayi, String combineDocument, int orgNo, long orgDate, @Nullable String organisation, long idOrganisation) {
         this.documentCode = documentCode;
         this.idDocumentType = idDocumentType;
         this.documentEnteredDate = documentEnteredDate;
@@ -64,6 +64,7 @@ public class Document implements Serializable {
         this.orgNo = orgNo;
         this.orgDate = orgDate;
         this.organisation = organisation;
+        this.idOrganisation = idOrganisation;
     }
 
     public Document() {
@@ -92,6 +93,7 @@ public class Document implements Serializable {
                 ", orgNo=" + orgNo +
                 ", orgDate=" + orgDate +
                 ", organisation='" + organisation + '\'' +
+                ", idOrganisation=" + idOrganisation +
                 '}';
     }
 
@@ -258,6 +260,14 @@ public class Document implements Serializable {
 
     public void setOrganisation(@Nullable String organisation) {
         this.organisation = organisation;
+    }
+
+    public long getIdOrganisation() {
+        return idOrganisation;
+    }
+
+    public void setIdOrganisation(long idOrganisation) {
+        this.idOrganisation = idOrganisation;
     }
 
     @Override

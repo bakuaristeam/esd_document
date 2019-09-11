@@ -23,12 +23,13 @@ public class Applicant implements Serializable {
     @Nullable
     private String address;
     @Nullable
-    private int telNO;
+    private String telNO;
     @Nullable
     private String mail;
 
 
-    public Applicant(String name, String surName, @Nullable String paternalName, @Nullable String passportNo, int isVisible, int isKollektiv, @Nullable String address, int telNO, @Nullable String mail) {
+    public Applicant(long idApplicant, String name, String surName, @Nullable String paternalName, @Nullable String passportNo, int isVisible, int isKollektiv, @Nullable String address, @Nullable String telNO, @Nullable String mail) {
+        this.idApplicant = idApplicant;
         this.name = name;
         this.surName = surName;
         this.paternalName = paternalName;
@@ -54,7 +55,7 @@ public class Applicant implements Serializable {
                 ", isVisible=" + isVisible +
                 ", isKollektiv=" + isKollektiv +
                 ", address='" + address + '\'' +
-                ", telNO=" + telNO +
+                ", telNO='" + telNO + '\'' +
                 ", mail='" + mail + '\'' +
                 '}';
     }
@@ -130,11 +131,12 @@ public class Applicant implements Serializable {
         this.address = address;
     }
 
-    public int getTelNO() {
+    @Nullable
+    public String getTelNO() {
         return telNO;
     }
 
-    public void setTelNO(int telNO) {
+    public void setTelNO(@Nullable String telNO) {
         this.telNO = telNO;
     }
 
