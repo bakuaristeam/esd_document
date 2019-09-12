@@ -30,6 +30,7 @@ com\aris\ESD_Document\proxy\proxyDitel\ResponseDocElastic.class
 com\aris\ESD_Document\db\service\DataBaseService.class
 com\aris\ESD_Document\Service\api\DocumentSearchServices.class
 com\aris\ESD_Document\Service\api\CombineDocCrudService.class
+com\aris\ESD_Document\proxy\proxyDitel\DocTypeViewRootModel.class
 com\aris\ESD_Document\Service\internalService\CombineDocCrudInternalService.class
 com\aris\ESD_Document\Service\api\CombineDocSearchServices.class
 com\aris\ESD_Document\Service\api\DocumentCrudService.class

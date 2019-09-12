@@ -36,5 +36,6 @@ public interface RepoDocument extends JpaRepository<Document,Long> {
     Document findByIsVisible(int isVisible);
 
     long countByIdDocumentType(long idDocType);
+    long countByIdDocumentTypeRoot(long idDocTypeRoot);
 
 }

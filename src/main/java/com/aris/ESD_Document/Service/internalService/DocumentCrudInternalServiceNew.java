@@ -13,6 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class DocumentCrudInternalServiceNew {
 
@@ -36,6 +38,27 @@ public class DocumentCrudInternalServiceNew {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    private long getLastRootDocumentTypeId(List<DocTypeViewRootModel> responseCount) {
+        DocTypeViewRootModel docTypeViewRootModel = new DocTypeViewRootModel();
+        for (int i = 0; i < responseCount.size(); i++) {
+            DocTypeViewRootModel d = responseCount.get(i);
+            logger.info("*************************************************************************");
+            logger.info("d :{}", d.toString());
+            logger.info("*************************************************************************");
+            if (d.getRoot() == null) {
+                docTypeViewRootModel = d;
+                break;
+            } else {
+                i=0;
+                responseCount.clear();
+                responseCount.addAll(d.getRoot());
+            }
+        }
+
+
+        return docTypeViewRootModel.getId();
+    }
+
     public DocumentResponse saveDocument(SaveDocumentRequest saveDocumentRequest) {
         DocumentResponse documentResponse = new DocumentResponse();
         try {
@@ -47,7 +70,6 @@ public class DocumentCrudInternalServiceNew {
             document.setIdDocumentType(saveDocumentRequest.getIdDocumentType());
             document.setIdApplicant(saveDocumentRequest.getIdApplicant());
             document.setIdDepartment(saveDocumentRequest.getIdDepartment());
-            document.setOrganisation(saveDocumentRequest.getOrganisation());
             document.setNote(saveDocumentRequest.getNote());
             document.setIdCreatedEmp(saveDocumentRequest.getIdCreatedEmp());
             document.setIsVisible(1);
@@ -93,6 +115,11 @@ public class DocumentCrudInternalServiceNew {
             ResponseSearchDepartmentByIdDep responseDep = proxyDepartment.getDepartmentIdDep(document.getIdDepartment());
             logger.info(" responseDep:{}", responseDep.toString());
 
+            List<DocTypeViewRootModel> responseCount = proxyDocType.getRootDocumentType(document.getIdDocumentType());
+            logger.info(" responseDocType:{}", responseDocType.toString());
+            document.setIdDocumentTypeRoot(getLastRootDocumentTypeId(responseCount));
+
+
             // TODO: 26/08/2019
             // vetendaslardan daxil olan senedlere gore kodun verilmesi
 
@@ -101,7 +128,7 @@ public class DocumentCrudInternalServiceNew {
 
                     logger.info(" responseApplicant :{}", responseApplicant.getApplicant().toString());
                     String s = "";
-                    s += getDocCount(document.getIdDocumentType());
+                    s += getDocCount(document.getIdDocumentTypeRoot());
 
 //                    String docIDForCode = document.getIdDocument() + "";
 //                    for (int i = 0; i < 1 - docIDForCode.length(); i++) {
@@ -116,7 +143,7 @@ public class DocumentCrudInternalServiceNew {
 //                    ResponseSearchDocType responseDocTypeLocal = proxyDocType.getDocMovByIdDocType(responseDocType.getDocumentMovByidDocumentType().getParentId());
                     String docCode1 = responseApplicant.getApplicant().getSurName().substring(0, 1) + "-" + s + "-" + responseDocType.getDocumentMovByidDocumentType().getDocNumber();
                     document.setDocumentCode(docCode1);
-                    if(document.getDocumentCode().substring(0,1).equalsIgnoreCase("-")){
+                    if (document.getDocumentCode().substring(0, 1).equalsIgnoreCase("-")) {
                         document.setDocumentCode(document.getDocumentCode().substring(1));
                     }
                     logger.info("document.SetDocCode :{}", document.toString());
@@ -126,7 +153,7 @@ public class DocumentCrudInternalServiceNew {
                 else {
                     logger.info("responseApplicant.getApplicant():{}", responseApplicant.getApplicant());
                     String s = "";
-                    s += getDocCount(document.getIdDocumentType());
+                    s += getDocCount(document.getIdDocumentTypeRoot());
 
                     while (s.length() < 5) {
                         s = "0" + s;
@@ -134,7 +161,7 @@ public class DocumentCrudInternalServiceNew {
 //                    ResponseSearchDocType responseDocTypeLocal = proxyDocType.getDocMovByIdDocType(responseDocType.getDocumentMovByidDocumentType().getParentId());
                     String docCode1 = "Kol-" + s + "-" + responseDocType.getDocumentMovByidDocumentType().getDocNumber();
                     document.setDocumentCode(docCode1);
-                    if(document.getDocumentCode().substring(0,1).equalsIgnoreCase("-")){
+                    if (document.getDocumentCode().substring(0, 1).equalsIgnoreCase("-")) {
                         document.setDocumentCode(document.getDocumentCode().substring(1));
                     }
                 }
@@ -143,7 +170,7 @@ public class DocumentCrudInternalServiceNew {
             else if (responseDocType.getDocumentMovByidDocumentType().getParentId() > 0) {
                 logger.info("responseApplicant :{}", responseApplicant.toString());
                 String s = "";
-                s += getDocCount(document.getIdDocumentType());
+                s += getDocCount(document.getIdDocumentTypeRoot());
 
                 while (s.length() < 5) {
                     s = "0" + s;
@@ -151,14 +178,14 @@ public class DocumentCrudInternalServiceNew {
 //                ResponseSearchDocType responseDocTypeLocal = proxyDocType.getDocMovByIdDocType(responseDocType.getDocumentMovByidDocumentType().getParentId());
                 String docCode1 = responseDocType.getDocumentMovByidDocumentType().getDocNumber() + "-" + s;
                 document.setDocumentCode(docCode1);
-                if(document.getDocumentCode().substring(0,1).equalsIgnoreCase("-")){
+                if (document.getDocumentCode().substring(0, 1).equalsIgnoreCase("-")) {
                     document.setDocumentCode(document.getDocumentCode().substring(1));
                 }
                 logger.info("Document :{} ", document.toString());
             } else if (responseDocType.getDocumentMovByidDocumentType().getParentId() == 0) {
                 logger.info("responseApplicant :{}", responseApplicant.toString());
                 String s = "";
-                s += getDocCount(document.getIdDocumentType());
+                s += getDocCount(document.getIdDocumentTypeRoot());
 
                 while (s.length() < 5) {
                     s = "0" + s;
@@ -166,14 +193,14 @@ public class DocumentCrudInternalServiceNew {
 //                ResponseSearchDocType responseDocTypeLocal = proxyDocType.getDocMovByIdDocType(responseDocType.getDocumentMovByidDocumentType().getParentId());
                 String docCode1 = responseDocType.getDocumentMovByidDocumentType().getDocNumber() + "-" + s;
                 document.setDocumentCode(docCode1);
-                if(document.getDocumentCode().substring(0,1).equalsIgnoreCase("-")){
+                if (document.getDocumentCode().substring(0, 1).equalsIgnoreCase("-")) {
                     document.setDocumentCode(document.getDocumentCode().substring(1));
                 }
                 logger.info("Document :{} ", document.toString());
             } else {
                 logger.info("responseApplicant :{}", responseApplicant.toString());
                 String s = "";
-                s += getDocCount(document.getIdDocumentType());
+                s += getDocCount(document.getIdDocumentTypeRoot());
 
                 while (s.length() < 5) {
                     s = "0" + s;
@@ -185,7 +212,7 @@ public class DocumentCrudInternalServiceNew {
                     docCode1 = s;
                 }
                 document.setDocumentCode(docCode1);
-                if(document.getDocumentCode().substring(0,1).equalsIgnoreCase("-")){
+                if (document.getDocumentCode().substring(0, 1).equalsIgnoreCase("-")) {
                     document.setDocumentCode(document.getDocumentCode().substring(1));
                 }
                 logger.info("Document :{} ", document.toString());
@@ -219,22 +246,15 @@ public class DocumentCrudInternalServiceNew {
         return documentResponse;
     }
 
-    public ResponseDocCount getDocCount(long idDocType) {
-        ResponseDocCount responseDocCount = new ResponseDocCount();
-
+    public long getDocCount(long idDocType) {
         try {
-            responseDocCount.setDocType(repoDocument.countByIdDocumentType(idDocType));
-
-            responseDocCount.setServerCode(200);
-            responseDocCount.setServerMessage("Doc Count");
-            logger.info("Doc Count idEmpFrom count :{} idEmpTo :{} ", responseDocCount.getDocType());
-
+            long count = repoDocument.countByIdDocumentTypeRoot(idDocType);
+            logger.info("Doc Count idEmpFrom count :{}", count);
+            return count;
         } catch (Exception e) {
-            responseDocCount.setServerCode(100);
-            responseDocCount.setServerMessage("error");
             logger.error("error :", e);
+            return 0;
         }
-        return responseDocCount;
 
     }
 
@@ -324,7 +344,6 @@ public class DocumentCrudInternalServiceNew {
                 doc.setDocumentCode(updateDocumentRequest.getDocumentCode());
                 doc.setIdDocumentType(updateDocumentRequest.getIdDocumentType());
                 doc.setIdApplicant(updateDocumentRequest.getIdApplicant());
-                doc.setOrganisation(updateDocumentRequest.getOrganisation());
                 doc.setIdDepartment(updateDocumentRequest.getIdDepartment());
                 doc.setNote(updateDocumentRequest.getNote());
                 doc.setIsVisible(1);
@@ -342,7 +361,7 @@ public class DocumentCrudInternalServiceNew {
                 doc.setOrgNo(updateDocumentRequest.getOrgNo());
                 doc.setCombineDocument(updateDocumentRequest.getCombineDocument());
 
-                doc.setOrganisation(updateDocumentRequest.getOrganisation());
+                doc.setIdOrganisation(updateDocumentRequest.getIdOrganisation());
 //                doc=repoDocument.save(doc);
                 doc = hazelCastUtility.save(doc);
                 documentResponse.setDocument(doc);

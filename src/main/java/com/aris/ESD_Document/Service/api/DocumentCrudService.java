@@ -60,11 +60,11 @@ public class DocumentCrudService {
         return documentCrudInternalService.deleteIdDocument(deleteDocumentRequest);
     }
 
-
-
-    @GetMapping("/getDocCount/{idDocType}")
-    public ResponseDocCount getCount(@PathVariable("idDocType")long idDocType){
-        return documentCrudInternalService.getDocCount(idDocType);
-    }
+//
+//
+//    @GetMapping("/getDocCount/{idDocType}")
+//    public ResponseDocCount getCount(@PathVariable("idDocType")long idDocType){
+//        return documentCrudInternalService.getDocCount(idDocType);
+//    }
 
 }

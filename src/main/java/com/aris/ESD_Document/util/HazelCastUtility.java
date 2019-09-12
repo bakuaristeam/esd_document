@@ -7,6 +7,7 @@ import com.aris.ESD_Document.db.service.DataBaseService;
 import com.aris.ESD_Document.proxy.ProxyApplicant;
 import com.aris.ESD_Document.proxy.ProxyDepartment;
 import com.aris.ESD_Document.proxy.ProxyDocType;
+import com.aris.ESD_Document.proxy.proxyDitel.DocTypeViewRootModel;
 import com.aris.ESD_Document.proxy.proxyDitel.ResponseApplicant;
 import com.aris.ESD_Document.proxy.proxyDitel.ResponseSearchDepartmentByIdDep;
 import com.aris.ESD_Document.proxy.proxyDitel.ResponseSearchDocType;
@@ -52,7 +53,6 @@ public class HazelCastUtility {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-
     public void startChacing() {
         List<Document> listOfDoc = dataBaseService.findAllAsList();
         for (Document document : listOfDoc) {
@@ -62,6 +62,25 @@ public class HazelCastUtility {
     }
 
     Document fromDb;
+
+    private long getLastRootDocumentTypeId(List<DocTypeViewRootModel> responseCount) {
+        DocTypeViewRootModel docTypeViewRootModel = new DocTypeViewRootModel();
+        for (int i = 0; i < responseCount.size(); i++) {
+            DocTypeViewRootModel d = responseCount.get(i);
+            logger.info("*************************************************************************");
+            logger.info("d :{}", d.toString());
+            logger.info("*************************************************************************");
+            if (d.getRoot() == null) {
+                docTypeViewRootModel = d;
+                break;
+            } else {
+                i=0;
+                responseCount.clear();
+                responseCount.addAll(d.getRoot());
+            }
+        }
+        return docTypeViewRootModel.getId();
+    }
 
     public Document save(Document document) throws Exception {
 
@@ -89,7 +108,6 @@ public class HazelCastUtility {
             fromDb.setOrgDate(document.getOrgDate());
             fromDb.setCombineDocument(document.getCombineDocument());
 
-            fromDb.setOrganisation(document.getOrganisation());
             fromDb.setIdOrganisation(document.getIdOrganisation());
 
 //            document= repoDocument.save(document);
@@ -111,7 +129,6 @@ public class HazelCastUtility {
 //            document=dataBaseService.insertUpdate(document);
 //            logger.info("step4--------");
 
-
             ResponseApplicant responseApplicant = proxyApplicant.getApplicantIdApplicant(document.getIdApplicant());
             logger.info("responseApplicant :{}", responseApplicant.toString());
             ResponseSearchDocType responseDocType = proxyDocType.getDocMovByIdDocType(document.getIdDocumentType());
@@ -119,6 +136,11 @@ public class HazelCastUtility {
 
             ResponseSearchDepartmentByIdDep responseDep = proxyDepartment.getDepartmentIdDep(document.getIdDepartment());
             logger.info(" responseDep:{}", responseDep.toString());
+
+            List<DocTypeViewRootModel> responseCount = proxyDocType.getRootDocumentType(document.getIdDocumentType());
+            logger.info(" responseDocType:{}", responseDocType.toString());
+            document.setIdDocumentTypeRoot(getLastRootDocumentTypeId(responseCount));
+
 
             // TODO: 26/08/2019
             // vetendaslardan daxil olan senedlere gore kodun verilmesi
@@ -128,7 +150,7 @@ public class HazelCastUtility {
 
                     logger.info(" responseApplicant :{}", responseApplicant.getApplicant().toString());
                     String s = "";
-                    s += getDocCount(document.getIdDocumentType());
+                    s += getDocCount(document.getIdDocumentTypeRoot());
 
 //                    String docIDForCode = document.getIdDocument() + "";
 //                    for (int i = 0; i < 1 - docIDForCode.length(); i++) {
@@ -143,7 +165,7 @@ public class HazelCastUtility {
 //                    ResponseSearchDocType responseDocTypeLocal = proxyDocType.getDocMovByIdDocType(responseDocType.getDocumentMovByidDocumentType().getParentId());
                     String docCode1 = responseApplicant.getApplicant().getSurName().substring(0, 1) + "-" + s + "-" + responseDocType.getDocumentMovByidDocumentType().getDocNumber();
                     document.setDocumentCode(docCode1);
-                    if(document.getDocumentCode().substring(0,1).equalsIgnoreCase("-")){
+                    if (document.getDocumentCode().substring(0, 1).equalsIgnoreCase("-")) {
                         document.setDocumentCode(document.getDocumentCode().substring(1));
                     }
                     logger.info("document.SetDocCode :{}", document.toString());
@@ -153,7 +175,7 @@ public class HazelCastUtility {
                 else {
                     logger.info("responseApplicant.getApplicant():{}", responseApplicant.getApplicant());
                     String s = "";
-                    s += getDocCount(document.getIdDocumentType());
+                    s += getDocCount(document.getIdDocumentTypeRoot());
 
                     while (s.length() < 5) {
                         s = "0" + s;
@@ -161,7 +183,7 @@ public class HazelCastUtility {
 //                    ResponseSearchDocType responseDocTypeLocal = proxyDocType.getDocMovByIdDocType(responseDocType.getDocumentMovByidDocumentType().getParentId());
                     String docCode1 = "Kol-" + s + "-" + responseDocType.getDocumentMovByidDocumentType().getDocNumber();
                     document.setDocumentCode(docCode1);
-                    if(document.getDocumentCode().substring(0,1).equalsIgnoreCase("-")){
+                    if (document.getDocumentCode().substring(0, 1).equalsIgnoreCase("-")) {
                         document.setDocumentCode(document.getDocumentCode().substring(1));
                     }
                 }
@@ -170,7 +192,7 @@ public class HazelCastUtility {
             else if (responseDocType.getDocumentMovByidDocumentType().getParentId() > 0) {
                 logger.info("responseApplicant :{}", responseApplicant.toString());
                 String s = "";
-                s += getDocCount(document.getIdDocumentType());
+                s += getDocCount(document.getIdDocumentTypeRoot());
 
                 while (s.length() < 5) {
                     s = "0" + s;
@@ -178,14 +200,14 @@ public class HazelCastUtility {
 //                ResponseSearchDocType responseDocTypeLocal = proxyDocType.getDocMovByIdDocType(responseDocType.getDocumentMovByidDocumentType().getParentId());
                 String docCode1 = responseDocType.getDocumentMovByidDocumentType().getDocNumber() + "-" + s;
                 document.setDocumentCode(docCode1);
-                if(document.getDocumentCode().substring(0,1).equalsIgnoreCase("-")){
+                if (document.getDocumentCode().substring(0, 1).equalsIgnoreCase("-")) {
                     document.setDocumentCode(document.getDocumentCode().substring(1));
                 }
                 logger.info("Document :{} ", document.toString());
             } else if (responseDocType.getDocumentMovByidDocumentType().getParentId() == 0) {
                 logger.info("responseApplicant :{}", responseApplicant.toString());
                 String s = "";
-                s += getDocCount(document.getIdDocumentType());
+                s += getDocCount(document.getIdDocumentTypeRoot());
 
                 while (s.length() < 5) {
                     s = "0" + s;
@@ -193,14 +215,14 @@ public class HazelCastUtility {
 //                ResponseSearchDocType responseDocTypeLocal = proxyDocType.getDocMovByIdDocType(responseDocType.getDocumentMovByidDocumentType().getParentId());
                 String docCode1 = responseDocType.getDocumentMovByidDocumentType().getDocNumber() + "-" + s;
                 document.setDocumentCode(docCode1);
-                if(document.getDocumentCode().substring(0,1).equalsIgnoreCase("-")){
+                if (document.getDocumentCode().substring(0, 1).equalsIgnoreCase("-")) {
                     document.setDocumentCode(document.getDocumentCode().substring(1));
                 }
                 logger.info("Document :{} ", document.toString());
             } else {
                 logger.info("responseApplicant :{}", responseApplicant.toString());
                 String s = "";
-                s += getDocCount(document.getIdDocumentType());
+                s += getDocCount(document.getIdDocumentTypeRoot());
 
                 while (s.length() < 5) {
                     s = "0" + s;
@@ -212,7 +234,7 @@ public class HazelCastUtility {
                     docCode1 = s;
                 }
                 document.setDocumentCode(docCode1);
-                if(document.getDocumentCode().substring(0,1).equalsIgnoreCase("-")){
+                if (document.getDocumentCode().substring(0, 1).equalsIgnoreCase("-")) {
                     document.setDocumentCode(document.getDocumentCode().substring(1));
                 }
                 logger.info("Document :{} ", document.toString());
@@ -244,22 +266,15 @@ public class HazelCastUtility {
         return mapOfDocument.get(idDoc);
     }
 
-    public ResponseDocCount getDocCount(long idDocType) {
-        ResponseDocCount responseDocCount = new ResponseDocCount();
-
+    private long getDocCount(long idDocType) {
         try {
-            responseDocCount.setDocType(repoDocument.countByIdDocumentType(idDocType));
-
-            responseDocCount.setServerCode(200);
-            responseDocCount.setServerMessage("Doc Count");
-            logger.info("Doc Count idEmpFrom count :{} idEmpTo :{} ", responseDocCount.getDocType());
-
+            long count = repoDocument.countByIdDocumentTypeRoot(idDocType);
+            logger.info("Doc Count idEmpFrom count :{}", count);
+            return count;
         } catch (Exception e) {
-            responseDocCount.setServerCode(100);
-            responseDocCount.setServerMessage("error");
             logger.error("error :", e);
+            return 0;
         }
-        return responseDocCount;
 
     }
 }

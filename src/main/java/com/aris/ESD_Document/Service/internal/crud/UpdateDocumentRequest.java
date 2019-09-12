@@ -29,14 +29,17 @@ public class UpdateDocumentRequest {
     private int orgNo;
     @Nullable
     private long orgDate;
-    @Nullable
-    private String organisation;
-
 //    @Nullable
-//    private long idOrganisation;
+//    private String organisation;
 
+    @Nullable
+    private long idOrganisation;
 
-    public UpdateDocumentRequest(String documentCode, long idDocumentType, long documentEnteredDate, long expiredDate, long idApplicant, long idDepartment, String note, int isVisible, int isDelete, long idCreatedEmp, int isControl, int isMoved, int vereqSayi, int qosma, int qosmaSayi, String combineDocument, int orgNo, long orgDate, @Nullable String organisation) {
+    public UpdateDocumentRequest() {
+    }
+
+    public UpdateDocumentRequest(long idDocument, String documentCode, long idDocumentType, long documentEnteredDate, long expiredDate, long idApplicant, long idDepartment, String note, int isVisible, int isDelete, long idCreatedEmp, int isControl, int isMoved, int vereqSayi, int qosma, int qosmaSayi, String combineDocument, int orgNo, long orgDate, long idOrganisation) {
+        this.idDocument = idDocument;
         this.documentCode = documentCode;
         this.idDocumentType = idDocumentType;
         this.documentEnteredDate = documentEnteredDate;
@@ -55,38 +58,8 @@ public class UpdateDocumentRequest {
         this.combineDocument = combineDocument;
         this.orgNo = orgNo;
         this.orgDate = orgDate;
-        this.organisation = organisation;
+        this.idOrganisation = idOrganisation;
     }
-
-    public UpdateDocumentRequest() {
-    }
-
-    @Override
-    public String toString() {
-        return "UpdateDocumentRequest{" +
-                "idDocument=" + idDocument +
-                ", documentCode='" + documentCode + '\'' +
-                ", idDocumentType=" + idDocumentType +
-                ", documentEnteredDate=" + documentEnteredDate +
-                ", expiredDate=" + expiredDate +
-                ", idApplicant=" + idApplicant +
-                ", idDepartment=" + idDepartment +
-                ", note='" + note + '\'' +
-                ", isVisible=" + isVisible +
-                ", isDelete=" + isDelete +
-                ", idCreatedEmp=" + idCreatedEmp +
-                ", isControl=" + isControl +
-                ", isMoved=" + isMoved +
-                ", vereqSayi=" + vereqSayi +
-                ", qosma=" + qosma +
-                ", qosmaSayi=" + qosmaSayi +
-                ", combineDocument='" + combineDocument + '\'' +
-                ", orgNo=" + orgNo +
-                ", orgDate=" + orgDate +
-                ", organisation='" + organisation + '\'' +
-                '}';
-    }
-
 
     public long getIdDocument() {
         return idDocument;
@@ -240,13 +213,37 @@ public class UpdateDocumentRequest {
         this.orgDate = orgDate;
     }
 
-    @Nullable
-    public String getOrganisation() {
-        return organisation;
+    public long getIdOrganisation() {
+        return idOrganisation;
     }
 
-    public void setOrganisation(@Nullable String organisation) {
-        this.organisation = organisation;
+    public void setIdOrganisation(long idOrganisation) {
+        this.idOrganisation = idOrganisation;
     }
 
+    @Override
+    public String toString() {
+        return "UpdateDocumentRequest{" +
+                "idDocument=" + idDocument +
+                ", documentCode='" + documentCode + '\'' +
+                ", idDocumentType=" + idDocumentType +
+                ", documentEnteredDate=" + documentEnteredDate +
+                ", expiredDate=" + expiredDate +
+                ", idApplicant=" + idApplicant +
+                ", idDepartment=" + idDepartment +
+                ", note='" + note + '\'' +
+                ", isVisible=" + isVisible +
+                ", isDelete=" + isDelete +
+                ", idCreatedEmp=" + idCreatedEmp +
+                ", isControl=" + isControl +
+                ", isMoved=" + isMoved +
+                ", vereqSayi=" + vereqSayi +
+                ", qosma=" + qosma +
+                ", qosmaSayi=" + qosmaSayi +
+                ", combineDocument='" + combineDocument + '\'' +
+                ", orgNo=" + orgNo +
+                ", orgDate=" + orgDate +
+                ", idOrganisation=" + idOrganisation +
+                '}';
+    }
 }
