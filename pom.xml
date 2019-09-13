@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.Aris</groupId>
-	<artifactId>ESD_Document</artifactId>
+	<artifactId>esd_document</artifactId>
 	<version>0.0.2</version>
-	<name>ESD_Document</name>
+	<name>esd_document</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
