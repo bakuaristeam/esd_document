@@ -29,13 +29,11 @@ public class Doc {
     @Nullable
     private long orgDate;
     @Nullable
-    private String organisation;
-
-//    @Nullable
-//    private long idOrganisation;
+    private long idOrganisation;
 
 
-    public Doc(String documentCode, long idDocumentType, long documentEnteredDate, long expiredDate, long idApplicant, long idDepartment, String note, int isVisible, int isDelete, long idCreatedEmp, int isControl, int isMoved, int vereqSayi, int qosma, int qosmaSayi, String combineDocument, int orgNo, long orgDate, @Nullable String organisation) {
+    public Doc(long idDocument, String documentCode, long idDocumentType, long documentEnteredDate, long expiredDate, long idApplicant, long idDepartment, String note, int isVisible, int isDelete, long idCreatedEmp, int isControl, int isMoved, int vereqSayi, int qosma, int qosmaSayi, String combineDocument, int orgNo, long orgDate, long idOrganisation) {
+        this.idDocument = idDocument;
         this.documentCode = documentCode;
         this.idDocumentType = idDocumentType;
         this.documentEnteredDate = documentEnteredDate;
@@ -54,7 +52,7 @@ public class Doc {
         this.combineDocument = combineDocument;
         this.orgNo = orgNo;
         this.orgDate = orgDate;
-        this.organisation = organisation;
+        this.idOrganisation = idOrganisation;
     }
 
     public Doc() {
@@ -62,7 +60,7 @@ public class Doc {
 
     @Override
     public String toString() {
-        return "Document{" +
+        return "Doc{" +
                 "idDocument=" + idDocument +
                 ", documentCode='" + documentCode + '\'' +
                 ", idDocumentType=" + idDocumentType +
@@ -82,10 +80,9 @@ public class Doc {
                 ", combineDocument='" + combineDocument + '\'' +
                 ", orgNo=" + orgNo +
                 ", orgDate=" + orgDate +
-                ", organisation='" + organisation + '\'' +
+                ", idOrganisation=" + idOrganisation +
                 '}';
     }
-
 
     public long getIdDocument() {
         return idDocument;
@@ -239,13 +236,12 @@ public class Doc {
         this.orgDate = orgDate;
     }
 
-    @Nullable
-    public String getOrganisation() {
-        return organisation;
+    public long getIdOrganisation() {
+        return idOrganisation;
     }
 
-    public void setOrganisation(@Nullable String organisation) {
-        this.organisation = organisation;
+    public void setIdOrganisation(long idOrganisation) {
+        this.idOrganisation = idOrganisation;
     }
 
     @Override

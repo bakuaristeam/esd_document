@@ -190,6 +190,8 @@ public class DocumentCrudInternalServiceNew {
 
             requestDocElastic.setApplicant(docInfo.getApplicant());
             requestDocElastic.setDocument(docInfo.getDocument());
+            requestDocElastic.setDocumentType(docInfo.getDocumentType());
+            requestDocElastic.setOrganisation(docInfo.getOrganisation());
 
             logger.info("step3 :{}", requestDocElastic.toString());
 
