@@ -1,13 +1,23 @@
 package com.Aris.esd_document.proxy.proxyDitel;
 
-
 import org.springframework.lang.Nullable;
 
-public class Doc {
+import javax.persistence.*;
+import java.io.Serializable;
 
+@Entity
+@Table(name = "document")
+public class Doc implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idDocument", nullable = false, unique = true)
     private long idDocument;
     private String documentCode;
     private long idDocumentType;
+    private long idDocumentTypeRoot;
     private long documentEnteredDate;
     private long expiredDate;
     @Nullable
@@ -25,17 +35,19 @@ public class Doc {
     private int qosmaSayi;
     private String combineDocument;
     @Nullable
-    private int orgNo;
+    private String orgNo;
     @Nullable
     private long orgDate;
     @Nullable
     private long idOrganisation;
 
+    public Doc() {
+    }
 
-    public Doc(long idDocument, String documentCode, long idDocumentType, long documentEnteredDate, long expiredDate, long idApplicant, long idDepartment, String note, int isVisible, int isDelete, long idCreatedEmp, int isControl, int isMoved, int vereqSayi, int qosma, int qosmaSayi, String combineDocument, int orgNo, long orgDate, long idOrganisation) {
-        this.idDocument = idDocument;
+    public Doc(String documentCode, long idDocumentType, long idDocumentTypeRoot, long documentEnteredDate, long expiredDate, long idApplicant, long idDepartment, String note, int isVisible, int isDelete, long idCreatedEmp, int isControl, int isMoved, int vereqSayi, int qosma, int qosmaSayi, String combineDocument, @Nullable String orgNo, long orgDate, long idOrganisation) {
         this.documentCode = documentCode;
         this.idDocumentType = idDocumentType;
+        this.idDocumentTypeRoot = idDocumentTypeRoot;
         this.documentEnteredDate = documentEnteredDate;
         this.expiredDate = expiredDate;
         this.idApplicant = idApplicant;
@@ -55,15 +67,13 @@ public class Doc {
         this.idOrganisation = idOrganisation;
     }
 
-    public Doc() {
-    }
-
     @Override
     public String toString() {
-        return "Doc{" +
+        return "Document{" +
                 "idDocument=" + idDocument +
                 ", documentCode='" + documentCode + '\'' +
                 ", idDocumentType=" + idDocumentType +
+                ", idDocumentTypeRoot=" + idDocumentTypeRoot +
                 ", documentEnteredDate=" + documentEnteredDate +
                 ", expiredDate=" + expiredDate +
                 ", idApplicant=" + idApplicant +
@@ -78,10 +88,14 @@ public class Doc {
                 ", qosma=" + qosma +
                 ", qosmaSayi=" + qosmaSayi +
                 ", combineDocument='" + combineDocument + '\'' +
-                ", orgNo=" + orgNo +
+                ", orgNo='" + orgNo + '\'' +
                 ", orgDate=" + orgDate +
                 ", idOrganisation=" + idOrganisation +
                 '}';
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public long getIdDocument() {
@@ -106,6 +120,14 @@ public class Doc {
 
     public void setIdDocumentType(long idDocumentType) {
         this.idDocumentType = idDocumentType;
+    }
+
+    public long getIdDocumentTypeRoot() {
+        return idDocumentTypeRoot;
+    }
+
+    public void setIdDocumentTypeRoot(long idDocumentTypeRoot) {
+        this.idDocumentTypeRoot = idDocumentTypeRoot;
     }
 
     public long getDocumentEnteredDate() {
@@ -220,11 +242,12 @@ public class Doc {
         this.combineDocument = combineDocument;
     }
 
-    public int getOrgNo() {
+    @Nullable
+    public String getOrgNo() {
         return orgNo;
     }
 
-    public void setOrgNo(int orgNo) {
+    public void setOrgNo(@Nullable String orgNo) {
         this.orgNo = orgNo;
     }
 
@@ -242,10 +265,5 @@ public class Doc {
 
     public void setIdOrganisation(long idOrganisation) {
         this.idOrganisation = idOrganisation;
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
     }
 }

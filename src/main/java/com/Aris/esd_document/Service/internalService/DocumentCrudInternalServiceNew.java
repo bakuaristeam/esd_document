@@ -22,16 +22,16 @@ public class DocumentCrudInternalServiceNew {
     private final DocElasticProxy docElasticProxy;
     private final ProxyApplicant proxyApplicant;
     private final ProxyDocType proxyDocType;
-    private final ProxyDepartment proxyDepartment;
+    private final ProxyEmployee proxyEmployee;
 
-    public DocumentCrudInternalServiceNew(RepoDocument repoDocument, HazelCastUtility hazelCastUtility, DocInfoProxy docInfoProxy, DocElasticProxy docElasticProxy, ProxyApplicant proxyApplicant, ProxyDocType proxyDocType, ProxyDepartment proxyDepartment) {
+    public DocumentCrudInternalServiceNew(RepoDocument repoDocument, HazelCastUtility hazelCastUtility, DocInfoProxy docInfoProxy, DocElasticProxy docElasticProxy, ProxyApplicant proxyApplicant, ProxyDocType proxyDocType, ProxyEmployee proxyEmployee) {
         this.repoDocument = repoDocument;
         this.hazelCastUtility = hazelCastUtility;
         this.docInfoProxy = docInfoProxy;
         this.docElasticProxy = docElasticProxy;
         this.proxyApplicant = proxyApplicant;
         this.proxyDocType = proxyDocType;
-        this.proxyDepartment = proxyDepartment;
+        this.proxyEmployee = proxyEmployee;
     }
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -73,8 +73,7 @@ public class DocumentCrudInternalServiceNew {
             ResponseSearchDocType responseDocType = proxyDocType.getDocMovByIdDocType(document.getIdDocumentType());
             logger.info(" responseDocType:{}", responseDocType.toString());
 
-            ResponseSearchDepartmentByIdDep responseDep = proxyDepartment.getDepartmentIdDep(document.getIdDepartment());
-            logger.info(" responseDep:{}", responseDep.toString());
+
 
             DocTypeViewRootModel docTypeViewRootModel = proxyDocType.getRootDocumentType(document.getIdDocumentType());
             logger.info(" responseDocType:{}", responseDocType.toString());
@@ -82,57 +81,65 @@ public class DocumentCrudInternalServiceNew {
 
             String s = makeDocCode(document);
 
-            if (responseApplicant.getApplicant() != null) {
-                if (responseApplicant.getApplicant().getIsKollektiv() == 0) {
-                    logger.info(" responseApplicant :{}", responseApplicant.getApplicant().toString());
-                    String docCode1 = responseApplicant.getApplicant().getSurName().substring(0, 1) + "-" + s + "-" + responseDocType.getDocumentMovByidDocumentType().getDocNumber();
+
+
+                if (responseApplicant.getApplicant() != null) {
+                    if (responseApplicant.getApplicant().getIsKollektiv() == 0) {
+                        logger.info(" responseApplicant :{}", responseApplicant.getApplicant().toString());
+                        String docCode1 = responseApplicant.getApplicant().getSurName().substring(0, 1) + "-" + s + "-" + responseDocType.getDocumentMovByidDocumentType().getDocNumber();
+                        document.setDocumentCode(docCode1);
+                        if (document.getDocumentCode().substring(0, 1).equalsIgnoreCase("-")) {
+                            document.setDocumentCode(document.getDocumentCode().substring(1));
+                        }
+                        logger.info("document.SetDocCode :{}", document.toString());
+                    } else {
+                        logger.info("responseApplicant.getApplicant():{}", responseApplicant.getApplicant());
+
+                        String docCode1 = "Kol-" + s + "-" + responseDocType.getDocumentMovByidDocumentType().getDocNumber();
+                        document.setDocumentCode(docCode1);
+                        if (document.getDocumentCode().substring(0, 1).equalsIgnoreCase("-")) {
+                            document.setDocumentCode(document.getDocumentCode().substring(1));
+                        }
+                    }
+                } else if (responseDocType.getDocumentMovByidDocumentType().getParentId() > 0) {
+                    logger.info("responseApplicant :{}", responseApplicant.toString());
+
+                    String docCode1 = responseDocType.getDocumentMovByidDocumentType().getDocNumber() + "-" + s;
                     document.setDocumentCode(docCode1);
                     if (document.getDocumentCode().substring(0, 1).equalsIgnoreCase("-")) {
                         document.setDocumentCode(document.getDocumentCode().substring(1));
                     }
-                    logger.info("document.SetDocCode :{}", document.toString());
-                } else {
-                    logger.info("responseApplicant.getApplicant():{}", responseApplicant.getApplicant());
+                    logger.info("Document :{} ", document.toString());
+                } else if (responseDocType.getDocumentMovByidDocumentType().getParentId() == 0) {
+                    logger.info("responseApplicant :{}", responseApplicant.toString());
 
-                    String docCode1 = "Kol-" + s + "-" + responseDocType.getDocumentMovByidDocumentType().getDocNumber();
+                    String docCode1;
+                    if (responseDocType.getDocumentMovByidDocumentType().getDocNumber().contains("%count%")) {
+                        docCode1 = responseDocType.getDocumentMovByidDocumentType().getDocNumber().replace("%count%", s);
+                    } else {
+                        docCode1 = responseDocType.getDocumentMovByidDocumentType().getDocNumber() + "-" + s;
+                    }
                     document.setDocumentCode(docCode1);
                     if (document.getDocumentCode().substring(0, 1).equalsIgnoreCase("-")) {
                         document.setDocumentCode(document.getDocumentCode().substring(1));
                     }
-                }
-            } else if (responseDocType.getDocumentMovByidDocumentType().getParentId() > 0) {
-                logger.info("responseApplicant :{}", responseApplicant.toString());
-
-                String docCode1 = responseDocType.getDocumentMovByidDocumentType().getDocNumber() + "-" + s;
-                document.setDocumentCode(docCode1);
-                if (document.getDocumentCode().substring(0, 1).equalsIgnoreCase("-")) {
-                    document.setDocumentCode(document.getDocumentCode().substring(1));
-                }
-                logger.info("Document :{} ", document.toString());
-            } else if (responseDocType.getDocumentMovByidDocumentType().getParentId() == 0) {
-                logger.info("responseApplicant :{}", responseApplicant.toString());
-
-                String docCode1 = responseDocType.getDocumentMovByidDocumentType().getDocNumber() + "-" + s;
-                document.setDocumentCode(docCode1);
-                if (document.getDocumentCode().substring(0, 1).equalsIgnoreCase("-")) {
-                    document.setDocumentCode(document.getDocumentCode().substring(1));
-                }
-                logger.info("Document :{} ", document.toString());
-            } else {
-                logger.info("responseApplicant :{}", responseApplicant.toString());
-
-                String docCode1;
-                if (responseDocType.getDocumentMovByidDocumentType().getDocNumber().length() > 0 && responseDocType.getDocumentMovByidDocumentType().getDocNumber() != null) {
-                    docCode1 = responseDocType.getDocumentMovByidDocumentType().getDocNumber().replace("%count%", s);
+                    logger.info("Document :{} ", document.toString());
                 } else {
-                    docCode1 = s;
+                    logger.info("responseApplicant :{}", responseApplicant.toString());
+
+                    String docCode1;
+                    if (responseDocType.getDocumentMovByidDocumentType().getDocNumber().length() > 0 && responseDocType.getDocumentMovByidDocumentType().getDocNumber() != null) {
+                        docCode1 = responseDocType.getDocumentMovByidDocumentType().getDocNumber().replace("%count%", s);
+                    } else {
+                        docCode1 = s;
+                    }
+                    document.setDocumentCode(docCode1);
+                    if (document.getDocumentCode().substring(0, 1).equalsIgnoreCase("-")) {
+                        document.setDocumentCode(document.getDocumentCode().substring(1));
+                    }
+                    logger.info("Document :{} ", document.toString());
                 }
-                document.setDocumentCode(docCode1);
-                if (document.getDocumentCode().substring(0, 1).equalsIgnoreCase("-")) {
-                    document.setDocumentCode(document.getDocumentCode().substring(1));
-                }
-                logger.info("Document :{} ", document.toString());
-            }
+
 //          document=repoDocument.save(document);
             document = hazelCastUtility.save(document);
             documentResponse.setDocument(document);

@@ -7,6 +7,7 @@ public class UpdateDocumentRequest {
     private long idDocument;
     private String documentCode;
     private long idDocumentType;
+    private long idDocumentTypeRoot;
     private long documentEnteredDate;
     private long expiredDate;
     @Nullable
@@ -24,22 +25,17 @@ public class UpdateDocumentRequest {
     private int qosmaSayi;
     private String combineDocument;
     @Nullable
-    private int orgNo;
+    private String orgNo;
     @Nullable
     private long orgDate;
-//    @Nullable
-//    private String organisation;
-
     @Nullable
     private long idOrganisation;
 
-    public UpdateDocumentRequest() {
-    }
-
-    public UpdateDocumentRequest(long idDocument, String documentCode, long idDocumentType, long documentEnteredDate, long expiredDate, long idApplicant, long idDepartment, String note, int isVisible, int isDelete, long idCreatedEmp, int isControl, int isMoved, int vereqSayi, int qosma, int qosmaSayi, String combineDocument, int orgNo, long orgDate, long idOrganisation) {
+    public UpdateDocumentRequest(long idDocument, String documentCode, long idDocumentType, long idDocumentTypeRoot, long documentEnteredDate, long expiredDate, long idApplicant, long idDepartment, String note, int isVisible, int isDelete, long idCreatedEmp, int isControl, int isMoved, int vereqSayi, int qosma, int qosmaSayi, String combineDocument, @Nullable String orgNo, long orgDate, long idOrganisation) {
         this.idDocument = idDocument;
         this.documentCode = documentCode;
         this.idDocumentType = idDocumentType;
+        this.idDocumentTypeRoot = idDocumentTypeRoot;
         this.documentEnteredDate = documentEnteredDate;
         this.expiredDate = expiredDate;
         this.idApplicant = idApplicant;
@@ -57,6 +53,36 @@ public class UpdateDocumentRequest {
         this.orgNo = orgNo;
         this.orgDate = orgDate;
         this.idOrganisation = idOrganisation;
+    }
+
+    public UpdateDocumentRequest() {
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateDocumentRequest{" +
+                "idDocument=" + idDocument +
+                ", documentCode='" + documentCode + '\'' +
+                ", idDocumentType=" + idDocumentType +
+                ", idDocumentTypeRoot=" + idDocumentTypeRoot +
+                ", documentEnteredDate=" + documentEnteredDate +
+                ", expiredDate=" + expiredDate +
+                ", idApplicant=" + idApplicant +
+                ", idDepartment=" + idDepartment +
+                ", note='" + note + '\'' +
+                ", isVisible=" + isVisible +
+                ", isDelete=" + isDelete +
+                ", idCreatedEmp=" + idCreatedEmp +
+                ", isControl=" + isControl +
+                ", isMoved=" + isMoved +
+                ", vereqSayi=" + vereqSayi +
+                ", qosma=" + qosma +
+                ", qosmaSayi=" + qosmaSayi +
+                ", combineDocument='" + combineDocument + '\'' +
+                ", orgNo='" + orgNo + '\'' +
+                ", orgDate=" + orgDate +
+                ", idOrganisation=" + idOrganisation +
+                '}';
     }
 
     public long getIdDocument() {
@@ -81,6 +107,14 @@ public class UpdateDocumentRequest {
 
     public void setIdDocumentType(long idDocumentType) {
         this.idDocumentType = idDocumentType;
+    }
+
+    public long getIdDocumentTypeRoot() {
+        return idDocumentTypeRoot;
+    }
+
+    public void setIdDocumentTypeRoot(long idDocumentTypeRoot) {
+        this.idDocumentTypeRoot = idDocumentTypeRoot;
     }
 
     public long getDocumentEnteredDate() {
@@ -195,11 +229,12 @@ public class UpdateDocumentRequest {
         this.combineDocument = combineDocument;
     }
 
-    public int getOrgNo() {
+    @Nullable
+    public String getOrgNo() {
         return orgNo;
     }
 
-    public void setOrgNo(int orgNo) {
+    public void setOrgNo(@Nullable String orgNo) {
         this.orgNo = orgNo;
     }
 
@@ -217,31 +252,5 @@ public class UpdateDocumentRequest {
 
     public void setIdOrganisation(long idOrganisation) {
         this.idOrganisation = idOrganisation;
-    }
-
-    @Override
-    public String toString() {
-        return "UpdateDocumentRequest{" +
-                "idDocument=" + idDocument +
-                ", documentCode='" + documentCode + '\'' +
-                ", idDocumentType=" + idDocumentType +
-                ", documentEnteredDate=" + documentEnteredDate +
-                ", expiredDate=" + expiredDate +
-                ", idApplicant=" + idApplicant +
-                ", idDepartment=" + idDepartment +
-                ", note='" + note + '\'' +
-                ", isVisible=" + isVisible +
-                ", isDelete=" + isDelete +
-                ", idCreatedEmp=" + idCreatedEmp +
-                ", isControl=" + isControl +
-                ", isMoved=" + isMoved +
-                ", vereqSayi=" + vereqSayi +
-                ", qosma=" + qosma +
-                ", qosmaSayi=" + qosmaSayi +
-                ", combineDocument='" + combineDocument + '\'' +
-                ", orgNo=" + orgNo +
-                ", orgDate=" + orgDate +
-                ", idOrganisation=" + idOrganisation +
-                '}';
     }
 }

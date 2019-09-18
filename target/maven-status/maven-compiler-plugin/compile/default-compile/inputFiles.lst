@@ -1,6 +1,8 @@
 C:\Users\Seymur\Desktop\ESD\esd_document\src\main\java\com\Aris\esd_document\db\entities\CombineDocument.java
+C:\Users\Seymur\Desktop\ESD\esd_document\src\main\java\com\Aris\esd_document\proxy\ProxyEmployee.java
 C:\Users\Seymur\Desktop\ESD\esd_document\src\main\java\com\Aris\esd_document\proxy\proxyDitel\RequestDocElastic.java
 C:\Users\Seymur\Desktop\ESD\esd_document\src\main\java\com\Aris\esd_document\proxy\ProxyApplicant.java
+C:\Users\Seymur\Desktop\ESD\esd_document\src\main\java\com\Aris\esd_document\proxy\proxyDitel\ResponseSearchEmployee.java
 C:\Users\Seymur\Desktop\ESD\esd_document\src\main\java\com\Aris\esd_document\proxy\proxyDitel\ResponseSearchDocType.java
 C:\Users\Seymur\Desktop\ESD\esd_document\src\main\java\com\Aris\esd_document\proxy\proxyDitel\Organisation.java
 C:\Users\Seymur\Desktop\ESD\esd_document\src\main\java\com\Aris\esd_document\Service\internal\crud\UpdateDocumentRequest.java
@@ -19,7 +21,6 @@ C:\Users\Seymur\Desktop\ESD\esd_document\src\main\java\com\Aris\esd_document\Ser
 C:\Users\Seymur\Desktop\ESD\esd_document\src\main\java\com\Aris\esd_document\Service\internalService\DocumentCrudInternalService.java
 C:\Users\Seymur\Desktop\ESD\esd_document\src\main\java\com\Aris\esd_document\db\service\DataBaseService.java
 C:\Users\Seymur\Desktop\ESD\esd_document\src\main\java\com\Aris\esd_document\proxy\proxyDitel\ResponseDocElastic.java
-C:\Users\Seymur\Desktop\ESD\esd_document\src\main\java\com\Aris\esd_document\proxy\ProxyDepartment.java
 C:\Users\Seymur\Desktop\ESD\esd_document\src\main\java\com\Aris\esd_document\Service\api\CombineDocSearchServices.java
 C:\Users\Seymur\Desktop\ESD\esd_document\src\main\java\com\Aris\esd_document\proxy\proxyDitel\ResponseSearchListDocType.java
 C:\Users\Seymur\Desktop\ESD\esd_document\src\main\java\com\Aris\esd_document\proxy\proxyDitel\SaveDocInfo.java
@@ -38,6 +39,7 @@ C:\Users\Seymur\Desktop\ESD\esd_document\src\main\java\com\Aris\esd_document\Esd
 C:\Users\Seymur\Desktop\ESD\esd_document\src\main\java\com\Aris\esd_document\Service\internalService\CombineDocSearchInternalService.java
 C:\Users\Seymur\Desktop\ESD\esd_document\src\main\java\com\Aris\esd_document\proxy\proxyDitel\Doc.java
 C:\Users\Seymur\Desktop\ESD\esd_document\src\main\java\com\Aris\esd_document\util\HazelcastConfiguration.java
+C:\Users\Seymur\Desktop\ESD\esd_document\src\main\java\com\Aris\esd_document\proxy\proxyDitel\Employee.java
 C:\Users\Seymur\Desktop\ESD\esd_document\src\main\java\com\Aris\esd_document\proxy\proxyDitel\ResponseApplicant.java
 C:\Users\Seymur\Desktop\ESD\esd_document\src\main\java\com\Aris\esd_document\proxy\proxyDitel\Department.java
 C:\Users\Seymur\Desktop\ESD\esd_document\src\main\java\com\Aris\esd_document\proxy\proxyDitel\ResponseSearchDepartmentByIdDep.java

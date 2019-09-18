@@ -35,7 +35,7 @@ public class Document implements Serializable {
     private int qosmaSayi;
     private String combineDocument;
     @Nullable
-    private int orgNo;
+    private String orgNo;
     @Nullable
     private long orgDate;
     @Nullable
@@ -44,7 +44,7 @@ public class Document implements Serializable {
     public Document() {
     }
 
-    public Document(String documentCode, long idDocumentType, long idDocumentTypeRoot, long documentEnteredDate, long expiredDate, long idApplicant, long idDepartment, String note, int isVisible, int isDelete, long idCreatedEmp, int isControl, int isMoved, int vereqSayi, int qosma, int qosmaSayi, String combineDocument, int orgNo, long orgDate, long idOrganisation) {
+    public Document(String documentCode, long idDocumentType, long idDocumentTypeRoot, long documentEnteredDate, long expiredDate, long idApplicant, long idDepartment, String note, int isVisible, int isDelete, long idCreatedEmp, int isControl, int isMoved, int vereqSayi, int qosma, int qosmaSayi, String combineDocument, @Nullable String orgNo, long orgDate, long idOrganisation) {
         this.documentCode = documentCode;
         this.idDocumentType = idDocumentType;
         this.idDocumentTypeRoot = idDocumentTypeRoot;
@@ -65,6 +65,33 @@ public class Document implements Serializable {
         this.orgNo = orgNo;
         this.orgDate = orgDate;
         this.idOrganisation = idOrganisation;
+    }
+
+    @Override
+    public String toString() {
+        return "Document{" +
+                "idDocument=" + idDocument +
+                ", documentCode='" + documentCode + '\'' +
+                ", idDocumentType=" + idDocumentType +
+                ", idDocumentTypeRoot=" + idDocumentTypeRoot +
+                ", documentEnteredDate=" + documentEnteredDate +
+                ", expiredDate=" + expiredDate +
+                ", idApplicant=" + idApplicant +
+                ", idDepartment=" + idDepartment +
+                ", note='" + note + '\'' +
+                ", isVisible=" + isVisible +
+                ", isDelete=" + isDelete +
+                ", idCreatedEmp=" + idCreatedEmp +
+                ", isControl=" + isControl +
+                ", isMoved=" + isMoved +
+                ", vereqSayi=" + vereqSayi +
+                ", qosma=" + qosma +
+                ", qosmaSayi=" + qosmaSayi +
+                ", combineDocument='" + combineDocument + '\'' +
+                ", orgNo='" + orgNo + '\'' +
+                ", orgDate=" + orgDate +
+                ", idOrganisation=" + idOrganisation +
+                '}';
     }
 
     public static long getSerialVersionUID() {
@@ -215,11 +242,12 @@ public class Document implements Serializable {
         this.combineDocument = combineDocument;
     }
 
-    public int getOrgNo() {
+    @Nullable
+    public String getOrgNo() {
         return orgNo;
     }
 
-    public void setOrgNo(int orgNo) {
+    public void setOrgNo(@Nullable String orgNo) {
         this.orgNo = orgNo;
     }
 
@@ -237,37 +265,5 @@ public class Document implements Serializable {
 
     public void setIdOrganisation(long idOrganisation) {
         this.idOrganisation = idOrganisation;
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return "Document{" +
-                "idDocument=" + idDocument +
-                ", documentCode='" + documentCode + '\'' +
-                ", idDocumentType=" + idDocumentType +
-                ", idDocumentTypeRoot=" + idDocumentTypeRoot +
-                ", documentEnteredDate=" + documentEnteredDate +
-                ", expiredDate=" + expiredDate +
-                ", idApplicant=" + idApplicant +
-                ", idDepartment=" + idDepartment +
-                ", note='" + note + '\'' +
-                ", isVisible=" + isVisible +
-                ", isDelete=" + isDelete +
-                ", idCreatedEmp=" + idCreatedEmp +
-                ", isControl=" + isControl +
-                ", isMoved=" + isMoved +
-                ", vereqSayi=" + vereqSayi +
-                ", qosma=" + qosma +
-                ", qosmaSayi=" + qosmaSayi +
-                ", combineDocument='" + combineDocument + '\'' +
-                ", orgNo=" + orgNo +
-                ", orgDate=" + orgDate +
-                ", idOrganisation=" + idOrganisation +
-                '}';
     }
 }

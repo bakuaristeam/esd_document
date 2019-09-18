@@ -1,5 +1,6 @@
 package com.Aris.esd_document.proxy.proxyDitel;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
 public class Department implements Serializable {
@@ -10,12 +11,12 @@ public class Department implements Serializable {
     private long parentId;
     private int orderNo;
     private int isVisible;
-    private int depIndex;
+    private String depIndex;
 
     public Department() {
     }
 
-    public Department(String depTitle, long parentId, int orderNo, int isVisible, int depIndex) {
+    public Department(String depTitle, long parentId, int orderNo, int isVisible, String depIndex) {
         this.depTitle = depTitle;
         this.parentId = parentId;
         this.orderNo = orderNo;
@@ -31,7 +32,7 @@ public class Department implements Serializable {
                 ", parentId=" + parentId +
                 ", orderNo=" + orderNo +
                 ", isVisible=" + isVisible +
-                ", depIndex=" + depIndex +
+                ", depIndex='" + depIndex + '\'' +
                 '}';
     }
 
@@ -79,11 +80,11 @@ public class Department implements Serializable {
         this.isVisible = isVisible;
     }
 
-    public int getDepIndex() {
+    public String getDepIndex() {
         return depIndex;
     }
 
-    public void setDepIndex(int depIndex) {
+    public void setDepIndex(String depIndex) {
         this.depIndex = depIndex;
     }
 

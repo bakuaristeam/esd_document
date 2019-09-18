@@ -4,7 +4,6 @@ import com.Aris.esd_document.db.entities.Document;
 import com.Aris.esd_document.db.repo.RepoDocument;
 import com.Aris.esd_document.db.service.DataBaseService;
 import com.Aris.esd_document.proxy.ProxyApplicant;
-import com.Aris.esd_document.proxy.ProxyDepartment;
 import com.Aris.esd_document.proxy.ProxyDocType;
 import com.Aris.esd_document.proxy.proxyDitel.DocTypeViewRootModel;
 import com.Aris.esd_document.proxy.proxyDitel.ResponseApplicant;
@@ -39,15 +38,18 @@ public class HazelCastUtility {
     @Autowired
     ProxyDocType proxyDocType;
 
-    @Autowired
-    ProxyDepartment proxyDepartment;
 
     @Autowired
     RepoDocument repoDocument;
 
     @PostConstruct
     public void init() {
+        mapOfDocument.clear();
+        setOfDocument.clear();
+        mapOfDocument.destroy();
+        setOfDocument.destroy();
         startChacing();
+
     }
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -100,8 +102,6 @@ public class HazelCastUtility {
             ResponseSearchDocType responseDocType = proxyDocType.getDocMovByIdDocType(document.getIdDocumentType());
             logger.info(" responseDocType:{}", responseDocType.toString());
 
-            ResponseSearchDepartmentByIdDep responseDep = proxyDepartment.getDepartmentIdDep(document.getIdDepartment());
-            logger.info(" responseDep:{}", responseDep.toString());
 
             DocTypeViewRootModel docTypeViewRootModel = proxyDocType.getRootDocumentType(document.getIdDocumentType());
             logger.info(" responseDocType:{}", responseDocType.toString());
@@ -120,6 +120,7 @@ public class HazelCastUtility {
                     logger.info("document.SetDocCode :{}", document.toString());
                 } else {
                     logger.info("responseApplicant.getApplicant():{}", responseApplicant.getApplicant());
+
                     String docCode1 = "Kol-" + s + "-" + responseDocType.getDocumentMovByidDocumentType().getDocNumber();
                     document.setDocumentCode(docCode1);
                     if (document.getDocumentCode().substring(0, 1).equalsIgnoreCase("-")) {
@@ -128,6 +129,7 @@ public class HazelCastUtility {
                 }
             } else if (responseDocType.getDocumentMovByidDocumentType().getParentId() > 0) {
                 logger.info("responseApplicant :{}", responseApplicant.toString());
+
                 String docCode1 = responseDocType.getDocumentMovByidDocumentType().getDocNumber() + "-" + s;
                 document.setDocumentCode(docCode1);
                 if (document.getDocumentCode().substring(0, 1).equalsIgnoreCase("-")) {
@@ -136,7 +138,13 @@ public class HazelCastUtility {
                 logger.info("Document :{} ", document.toString());
             } else if (responseDocType.getDocumentMovByidDocumentType().getParentId() == 0) {
                 logger.info("responseApplicant :{}", responseApplicant.toString());
-                String docCode1 = responseDocType.getDocumentMovByidDocumentType().getDocNumber() + "-" + s;
+
+                String docCode1;
+                if(responseDocType.getDocumentMovByidDocumentType().getDocNumber().contains("%count%")){
+                    docCode1 = responseDocType.getDocumentMovByidDocumentType().getDocNumber().replace("%count%", s);
+                }else{
+                    docCode1=responseDocType.getDocumentMovByidDocumentType().getDocNumber() + "-" + s;
+                }
                 document.setDocumentCode(docCode1);
                 if (document.getDocumentCode().substring(0, 1).equalsIgnoreCase("-")) {
                     document.setDocumentCode(document.getDocumentCode().substring(1));
@@ -144,6 +152,7 @@ public class HazelCastUtility {
                 logger.info("Document :{} ", document.toString());
             } else {
                 logger.info("responseApplicant :{}", responseApplicant.toString());
+
                 String docCode1;
                 if (responseDocType.getDocumentMovByidDocumentType().getDocNumber().length() > 0 && responseDocType.getDocumentMovByidDocumentType().getDocNumber() != null) {
                     docCode1 = responseDocType.getDocumentMovByidDocumentType().getDocNumber().replace("%count%", s);

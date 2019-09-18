@@ -4,12 +4,15 @@ com\Aris\esd_document\Service\internalService\DocumentCrudInternalServiceNew.cla
 com\Aris\esd_document\Service\internalService\CombineDocCrudInternalService.class
 com\Aris\esd_document\proxy\DocInfoProxy.class
 com\Aris\esd_document\proxy\proxyDitel\RegistredDocs.class
+com\Aris\esd_document\proxy\proxyDitel\Employee.class
 com\Aris\esd_document\db\repo\RepoCombineDocument.class
 com\Aris\esd_document\Service\internalService\CombineDocSearchInternalService.class
+com\Aris\esd_document\proxy\proxyDitel\ResponseSearchEmployee.class
 com\Aris\esd_document\Service\api\CombineDocSearchServices.class
 com\Aris\esd_document\Service\internalService\ResponseDocCount.class
 com\Aris\esd_document\util\HazelcastConfiguration.class
 com\Aris\esd_document\proxy\proxyDitel\ResponseDocInfo.class
+com\Aris\esd_document\proxy\ProxyEmployee.class
 com\Aris\esd_document\Service\internal\crud\RequestUpdateCombineDoc.class
 com\Aris\esd_document\proxy\proxyDitel\DocTypeViewRootModel.class
 com\Aris\esd_document\proxy\proxyDitel\ResponseApplicant.class
@@ -36,7 +39,6 @@ com\Aris\esd_document\Service\internal\CombineDocResponse.class
 com\Aris\esd_document\Service\internal\crud\DeleteDocumentRequest.class
 com\Aris\esd_document\proxy\ProxyDocType.class
 com\Aris\esd_document\EsdDocumentApplication.class
-com\Aris\esd_document\proxy\ProxyDepartment.class
 com\Aris\esd_document\Service\internal\crud\SaveDocumentRequest.class
 com\Aris\esd_document\Service\api\DocumentSearchServices.class
 com\Aris\esd_document\proxy\ProxyApplicant.class
