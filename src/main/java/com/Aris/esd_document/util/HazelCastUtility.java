@@ -5,6 +5,7 @@ import com.Aris.esd_document.db.repo.RepoDocument;
 import com.Aris.esd_document.db.service.DataBaseService;
 import com.Aris.esd_document.proxy.ProxyApplicant;
 import com.Aris.esd_document.proxy.ProxyDocType;
+import com.Aris.esd_document.proxy.ProxyEmployee;
 import com.Aris.esd_document.proxy.proxyDitel.DocTypeViewRootModel;
 import com.Aris.esd_document.proxy.proxyDitel.ResponseApplicant;
 import com.Aris.esd_document.proxy.proxyDitel.ResponseSearchDepartmentByIdDep;
@@ -41,6 +42,8 @@ public class HazelCastUtility {
 
     @Autowired
     RepoDocument repoDocument;
+    @Autowired
+    ProxyEmployee proxyEmployee;
 
     @PostConstruct
     public void init() {
@@ -54,7 +57,7 @@ public class HazelCastUtility {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private void startChacing(){
+    private void startChacing() {
         List<Document> listOfDoc = dataBaseService.findAllAsList();
         for (Document document : listOfDoc) {
             mapOfDocument.put(document.getIdDocument(), document);
@@ -109,7 +112,19 @@ public class HazelCastUtility {
 
             String s = makeDocCode(document);
 
-            if (responseApplicant.getApplicant() != null) {
+
+            if (responseDocType.getDocumentMovByidDocumentType().getDocNumber().equals("emp_id")) {
+                String empCode = proxyEmployee.getEmployeeIdEmp(document.getIdCreatedEmp()).getEmployee().getEmpCode();
+
+
+                logger.info("responseApplicant :{}", responseApplicant.toString());
+
+
+                document.setDocumentCode(empCode + "-10-" + s);
+
+                logger.info("Document :{} ", document.toString());
+
+            } else {if (responseApplicant.getApplicant() != null) {
                 if (responseApplicant.getApplicant().getIsKollektiv() == 0) {
                     logger.info(" responseApplicant :{}", responseApplicant.getApplicant().toString());
                     String docCode1 = responseApplicant.getApplicant().getSurName().substring(0, 1) + "-" + s + "-" + responseDocType.getDocumentMovByidDocumentType().getDocNumber();
@@ -140,10 +155,10 @@ public class HazelCastUtility {
                 logger.info("responseApplicant :{}", responseApplicant.toString());
 
                 String docCode1;
-                if(responseDocType.getDocumentMovByidDocumentType().getDocNumber().contains("%count%")){
+                if (responseDocType.getDocumentMovByidDocumentType().getDocNumber().contains("%count%")) {
                     docCode1 = responseDocType.getDocumentMovByidDocumentType().getDocNumber().replace("%count%", s);
-                }else{
-                    docCode1=responseDocType.getDocumentMovByidDocumentType().getDocNumber() + "-" + s;
+                } else {
+                    docCode1 = responseDocType.getDocumentMovByidDocumentType().getDocNumber() + "-" + s;
                 }
                 document.setDocumentCode(docCode1);
                 if (document.getDocumentCode().substring(0, 1).equalsIgnoreCase("-")) {
@@ -164,7 +179,9 @@ public class HazelCastUtility {
                     document.setDocumentCode(document.getDocumentCode().substring(1));
                 }
                 logger.info("Document :{} ", document.toString());
-            }
+
+            }}
+
         } else {
             fromDb = document;
         }

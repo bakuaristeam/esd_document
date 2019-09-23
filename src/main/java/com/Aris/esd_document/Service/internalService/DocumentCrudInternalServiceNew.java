@@ -74,15 +74,23 @@ public class DocumentCrudInternalServiceNew {
             logger.info(" responseDocType:{}", responseDocType.toString());
 
 
-
             DocTypeViewRootModel docTypeViewRootModel = proxyDocType.getRootDocumentType(document.getIdDocumentType());
             logger.info(" responseDocType:{}", responseDocType.toString());
             document.setIdDocumentTypeRoot(docTypeViewRootModel.getDocumentType().getIdDocumentType());
 
             String s = makeDocCode(document);
 
+            logger.info("responseApplicant :{}", responseApplicant.toString());
 
+            if (responseDocType.getDocumentMovByidDocumentType().getDocNumber().equals("emp_id")) {
+                String empCode = proxyEmployee.getEmployeeIdEmp(document.getIdCreatedEmp()).getEmployee().getEmpCode();
 
+                logger.info("doctype 1");
+                document.setDocumentCode(empCode + "-10-" + s);
+
+                logger.info("Document :{} ", document.toString());
+
+            } else {
                 if (responseApplicant.getApplicant() != null) {
                     if (responseApplicant.getApplicant().getIsKollektiv() == 0) {
                         logger.info(" responseApplicant :{}", responseApplicant.getApplicant().toString());
@@ -138,7 +146,10 @@ public class DocumentCrudInternalServiceNew {
                         document.setDocumentCode(document.getDocumentCode().substring(1));
                     }
                     logger.info("Document :{} ", document.toString());
+
                 }
+            }
+
 
 //          document=repoDocument.save(document);
             document = hazelCastUtility.save(document);

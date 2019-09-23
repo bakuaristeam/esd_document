@@ -152,7 +152,7 @@ public class DocumentSearchServices {
     }
 
     @GetMapping("/getAllDoc")
-    public ResponseSearchDocument getAllDoc(){
+    public ResponseSearchListDocument getAllDoc(){
         return documentSearchInternalService.getAllDoc();
     }
 

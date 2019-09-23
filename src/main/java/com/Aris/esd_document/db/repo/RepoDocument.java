@@ -1,6 +1,7 @@
 package com.Aris.esd_document.db.repo;
 
 import com.Aris.esd_document.db.entities.Document;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -33,7 +34,7 @@ public interface RepoDocument extends JpaRepository<Document,Long> {
 
     List<Document> findByIsControlAndIsVisibleAndIdCreatedEmp(int isControl,int isVisible,long idCreatedEmp);
 
-    Document findByIsVisible(int isVisible);
+    List<Document> findByIsVisible(int isVisible);
 
     long countByIdDocumentType(long idDocType);
     long countByIdDocumentTypeRoot(long idDocTypeRoot);

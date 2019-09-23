@@ -8,6 +8,8 @@ import com.Aris.esd_document.util.HazelCastUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -329,18 +331,20 @@ public class DocumentSearchInternalService {
         return response;
     }
 
-    public ResponseSearchDocument getAllDoc(){
-        Document document= repoDocument.findByIsVisible(1);
-        ResponseSearchDocument response = new ResponseSearchDocument();
+    public ResponseSearchListDocument getAllDoc(){
+
+
+        List<Document> listOfDocument= repoDocument.findByIsVisible(1);
+        ResponseSearchListDocument response = new ResponseSearchListDocument();
 
         try {
-            if (document != null ) {
-                response.setDocument(document);
+            if (listOfDocument != null && listOfDocument.size()>0) {
+                response.setListOfDocument(listOfDocument);
                 response.setServerCode(200);
                 response.setServerMessage(" Document found");
                 logger.info("SearchDocument response : {}", response.toString());
             } else {
-                response.setDocument(null);
+                response.setListOfDocument(null);
                 response.setServerCode(220);
                 response.setServerMessage("document not found");
             }
@@ -351,6 +355,7 @@ public class DocumentSearchInternalService {
         }
         return response;
     }
+
 
 
 
