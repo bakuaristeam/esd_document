@@ -1,5 +1,6 @@
 package com.Aris.esd_document.Service.internalService;
 
+import com.Aris.esd_document.Service.internal.StringResponse;
 import com.Aris.esd_document.Service.internal.search.ResponseSearchDocument;
 import com.Aris.esd_document.Service.internal.search.ResponseSearchListDocument;
 import com.Aris.esd_document.db.entities.Document;
@@ -141,6 +142,35 @@ public class DocumentSearchInternalService {
                 logger.info("step3-------");
                 response.setDocument(doc);
                 response.setServerCode(200);
+                response.setServerMessage("Document found");
+                logger.info("searchDocument response : {}", response.toString());
+            }
+        } catch (Exception e) {
+            response.setServerCode(100);
+            response.setServerMessage("error" + e);
+            logger.info("error", e);
+        }
+        return response;
+    }
+
+
+    public StringResponse getDocCodeByIdDoc(long idDoc) {
+//        Document document = repoDocument.findByIdDocumentAndIsVisible(idDoc,1);
+        StringResponse response = new StringResponse();
+        try {
+            logger.info("step1-------");
+            doc = hazelCastUtility.getDoC(idDoc);
+            logger.info("step2----- doc :{}", doc);
+            if (doc == null) {
+                response.setServerCode(100);
+                response.setServerMessage(" Document not found");
+                logger.info("searchDocument response : {}", response.toString());
+            } else {
+                logger.info("step3-------");
+                response.setServerCode(200);
+
+
+
                 response.setServerMessage("Document found");
                 logger.info("searchDocument response : {}", response.toString());
             }

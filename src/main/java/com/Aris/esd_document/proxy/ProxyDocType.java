@@ -1,6 +1,7 @@
 package com.Aris.esd_document.proxy;
 
 import com.Aris.esd_document.proxy.proxyDitel.DocTypeViewRootModel;
+import com.Aris.esd_document.proxy.proxyDitel.DocumentTypeResponse;
 import com.Aris.esd_document.proxy.proxyDitel.ResponseSearchDocType;
 import com.Aris.esd_document.proxy.proxyDitel.ResponseSearchListDocType;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
@@ -14,6 +15,10 @@ public interface ProxyDocType {
 
     @GetMapping("/esd_document_type/searchServices/getDocTypeIdDocType/{idDocType}")
     public ResponseSearchDocType getDocMovByIdDocType(@PathVariable("idDocType") long idDocType);
+
+
+    @GetMapping("/esd_document_type/searchServices/resolveCode/{id}")
+    public DocumentTypeResponse resolveCode(@PathVariable("id") long idDocType);
 
     @GetMapping("/esd_document_type/searchServices/getDocOneType")
     public ResponseSearchListDocType getDocTypeOne();
