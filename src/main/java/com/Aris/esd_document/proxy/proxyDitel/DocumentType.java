@@ -7,28 +7,29 @@ public class DocumentType  {
     private int parentId;
     private int type;
     private String docNumber;
+    private String antonimDocCode;
 
     public DocumentType() {
     }
 
-    public DocumentType(String documentTitle, int parentId, int type, String docNumber) {
+
+    public String getAntonimDocCode() {
+        return antonimDocCode;
+    }
+
+    public DocumentType setAntonimDocCode(String antonimDocCode) {
+        this.antonimDocCode = antonimDocCode;
+        return this;
+    }
+
+    public DocumentType(long idDocumentType, String documentTitle, int parentId, int type, String docNumber, String antonimDocCode) {
+        this.idDocumentType = idDocumentType;
         this.documentTitle = documentTitle;
         this.parentId = parentId;
         this.type = type;
         this.docNumber = docNumber;
+        this.antonimDocCode = antonimDocCode;
     }
-
-    @Override
-    public String toString() {
-        return "DocumentType{" +
-                "idDocumentType=" + idDocumentType +
-                ", documentTitle='" + documentTitle + '\'' +
-                ", parentId=" + parentId +
-                ", type=" + type +
-                ", docNumber='" + docNumber + '\'' +
-                '}';
-    }
-
 
     public long getIdDocumentType() {
         return idDocumentType;

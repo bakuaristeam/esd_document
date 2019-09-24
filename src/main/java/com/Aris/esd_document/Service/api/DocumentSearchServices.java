@@ -75,7 +75,7 @@ public class DocumentSearchServices {
             return "Error = + "+ response.getServerMessage();
         }
 
-        return response.getDocumentType().getDocNumber();
+        return response.getDocumentType().getAntonimDocCode();
     }
 
     @GetMapping("/getDocByIdApplicant/{idApplicant}")
