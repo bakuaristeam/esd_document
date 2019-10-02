@@ -8,6 +8,7 @@ public class DocumentType  {
     private int type;
     private String docNumber;
     private String antonimDocCode;
+    private String documentHeader;
 
     public DocumentType() {
     }
@@ -22,13 +23,24 @@ public class DocumentType  {
         return this;
     }
 
-    public DocumentType(long idDocumentType, String documentTitle, int parentId, int type, String docNumber, String antonimDocCode) {
+    public DocumentType(long idDocumentType, String documentTitle, int parentId, int type, String docNumber, String antonimDocCode, String documentHeader) {
         this.idDocumentType = idDocumentType;
         this.documentTitle = documentTitle;
         this.parentId = parentId;
         this.type = type;
         this.docNumber = docNumber;
         this.antonimDocCode = antonimDocCode;
+        this.documentHeader = documentHeader;
+    }
+
+
+    public String getDocumentHeader() {
+        return documentHeader;
+    }
+
+    public DocumentType setDocumentHeader(String documentHeader) {
+        this.documentHeader = documentHeader;
+        return this;
     }
 
     public long getIdDocumentType() {

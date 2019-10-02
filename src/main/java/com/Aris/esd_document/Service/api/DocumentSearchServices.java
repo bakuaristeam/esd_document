@@ -78,6 +78,23 @@ public class DocumentSearchServices {
         return response.getDocumentType().getAntonimDocCode();
     }
 
+    @GetMapping("/resolveTitle/{id}")
+    public String resolveTitle(@PathVariable("id") long id) {
+        Document document = repoDocument.findByIdDocumentAndIsVisible(id, 1);
+
+        if (document == null) {
+            return "Not Found";
+        }
+
+        DocumentTypeResponse response = proxyDocType.resolveCode(document.getIdDocumentType());
+
+        if (response.getServerCode()!=200){
+            return "Error = + "+ response.getServerMessage();
+        }
+
+        return response.getDocumentType().getDocumentHeader();
+    }
+
     @GetMapping("/getDocByIdApplicant/{idApplicant}")
     public ResponseSearchListDocument getDocByIdApplicant(@PathVariable("idApplicant") long idApplicant) {
         logger.info("esd_Document_idApplicant->search->request : {}", idApplicant);
